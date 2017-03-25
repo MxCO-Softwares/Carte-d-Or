@@ -2,6 +2,8 @@ extends layout
 
 block content
 
+    header(style="position: absolute;padding-left: 200px;background-color:orange;height:50px;top: 0px;right: 0%;left: 0%;")
+
     .leftpanel-div(style="position:fixed; top:0; left:0px; height: 100%; width:200px; background-color:red;")
 
         .profile-div(style="position:absolute; height: 300px; width:194px; border: 3px solid #73AD21;")
@@ -27,7 +29,7 @@ block content
                     a(href="/home")=val
 
 
-    .lunch-div(style="padding-left:200px; background-color:grey;")
+    .lunch-div(style="padding-left:200px; padding-top:50px; background-color:grey;")
         h1= title
         p Welcome to #{title}
         form(action="/home/account-creation" method="post")

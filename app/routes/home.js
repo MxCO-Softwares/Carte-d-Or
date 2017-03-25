@@ -8,24 +8,30 @@ var restaurant = [
     {name:"Cacao", img:["https://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-3.jpg"]}
 ];
 
+var database = require('../database.js').getDatabase();
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('home', { title: 'Home', restaurants:restaurant});
+    if(req.session.userId == null){
+        res.render('unregistered_home');
+    } else{
+        res.render('home', { title: 'Home', restaurants:restaurant});
+    }
 });
 
-router.post('/account-creation', function (req, res, next) {
-    var found = false;
-    for(var i=0; i<user.length; i++){
-        if(user[i].username == req.body.user){
-            found = true;
-            break;
-        }
+router.post('/signup', function (req, res, next) {
+
+    if(req.body.signupPassword != req.body.signupPassword2){
+        res.render('unregistered_home', { signupFailed:true });
+        return;
     }
-    if(found){
-        res.render('signin', { title: 'ERROR' });
+
+    if(database.getUserByName(req.body.signupName) != null){
+        res.render('unregistered_home', { signupFailed:true });
+        return;
     }else{
-        user.push({username:req.body.user, password:req.body.password});
-        res.json(user);
+        database.addNewUser(req.body.signupName, req.body.signupPassword);
+        res.json(database.users);
     }
 });
 
@@ -38,24 +44,17 @@ router.get('/signin', function (req, res, next) {
 
 router.post('/signin', function (req, res, next) {
     if(req.session.userId == null){
-        var found = false;
-        for(var i=0; i<user.length; i++){
-            if(user[i].username == req.body.user){
-                if(user[i].password == req.body.password){
-            req.session.userId = user[i].username;
-                    res.render('index', {title:req.session.userId});
-                    found = true;
-                    break;
-                } else{
-                    break;
-                }
+        var user = database.getUserByName(req.body.signinName);
+        if(user != null){
+            if(user.infoUser.password == req.body.signinPassword){
+                req.session.userId = user.id;
+                res.redirect('/home');
+                return;
             }
         }
-        if(!found) res.render('signin');
-        
-    } else{
-        res.redirect('/');
-    }
+        res.render('unregistered_home', {signinFailed:true});
+    }else
+        res.redirect('/home');
 });
 
 module.exports = router;

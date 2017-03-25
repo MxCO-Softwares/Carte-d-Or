@@ -1,0 +1,40 @@
+extends layout
+
+block content
+
+    img.fullscreen-img(src="https://ketchumfrance.files.wordpress.com/2011/03/bra_2883.jpg")
+
+    header.header
+
+
+    //.img-div(style="position:absolute; top:50px; bottom:0px; left:0px; right:0px;background-image:url('https://ketchumfrance.files.wordpress.com/2011/03/bra_2883.jpg')")
+
+    #central-button-div
+        a.button-link#signin-button-link(href="/home")  Sign in
+        a.button-link#signup-button-link(href="/home") Sign up
+
+    .sign-container-div#signin-div(style=signinFailed?"":"display:none")
+        ="Sign In"
+        =signinFailed?"signinFailed":""
+        form.identification-form(action="/home/signin" method="post" )
+            label(for="user") User :
+            input(type="text" name="signinName" placeholder="Enter your username")
+            label(for="password") Password :
+            input(type="password" name="signinPassword" placeholder="Enter your password")
+            input(type="submit" value="Submit")
+        input.button-link.sign-back-button(type="button" value="Retour" onclick="$(\"#signin-div\").hide(\"fast\");return true;")
+    .sign-container-div#signup-div(style=signupFailed?"":"display:none")
+        ="Sign Up"
+        =signupFailed?"signupFailed":""
+        form.identification-form(action="/home/signup" method="post")
+            label(for="user") User :
+            input(type="text" name="signupName" placeholder="Enter your username")
+            label(for="password") Password :
+            input(type="password" name="signupPassword" placeholder="Enter your password")
+            label(for="password2") Confirm Password :
+            input(type="password" name="signupPassword2" placeholder="Enter your password")
+            input(type="submit" value="Submit")
+        input.button-link.sign-back-button(type="button" value="Retour" onclick="$(\"#signup-div\").hide();return true;")
+
+    script(src="/javascripts/jquery.js")
+    script(src="/javascripts/unregistered_home.js")
