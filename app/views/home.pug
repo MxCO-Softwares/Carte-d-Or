@@ -2,26 +2,26 @@ extends layout
 
 block content
 
-    header(style="position: absolute;padding-left: 200px;background-color:orange;height:50px;top: 0px;right: 0%;left: 0%;")
+    header.header
 
-    .leftpanel-div(style="position:fixed; top:0; left:0px; height: 100%; width:200px; background-color:red;")
+    .leftpanel-div
 
-        .profile-div(style="position:absolute; height: 300px; width:194px; border: 3px solid #73AD21;")
-            a(href="/home" style="display:block;margin:0px auto; width:100px; height:100px; border-radius:50%;border: 3px solid #FFFFFF;")
-                img(src=restaurants[2].img[0] height="100" width="100" style="border-radius: 50%;")
+        #profile-div
+            a#profile-picture-link(href="/home")
+                img.round-img(src=restaurants[2].img[0] height="100" width="100")
 
             a(href="/home")
-                p(style="text-align:center") Elias B.
+                p.center-p Elias B.
             - var n = 0;
             while n < 3
-                span.rest_button(style="display:inline-block;position:relative;width:50px; height:50px; margin:6px;")
-                    a(href="/home" style="display:inline-block; width:50px; height:50px; border-radius:10%;border: 2px solid #FFFFFF;")
-                        img(src=restaurants[2].img[0] height="50" width="50" style="border-radius: 10%;")
-                        .toast(style="position:absolute; top: -8px; right:-8px; height: 16px; width:16px; border: 2px solid #FF0000;border-radius: 50%; background-color:blue; text-align:center;")= n++
+                span.fav-restaurant-span
+                    a.fav-restaurant-link(href="/home")
+                        img.round-square-img(src=restaurants[2].img[0] height="50" width="50")
+                        .toast.fav-restaurant-toast= n++
 
 
 
-        .lunchs-list-div(style="position:absolute; top:300px; bottom:0px; width:194px; border: 3px solid #00ADFF; overflow:auto")
+        .lunchs-list-div
             - var values = ["Segugu-midi","Segugu-soir","AfterWork"];
             ul
               each val in values
@@ -29,16 +29,9 @@ block content
                     a(href="/home")=val
 
 
-    .lunch-div(style="padding-left:200px; padding-top:50px; background-color:grey;")
+    .lunch-div
         h1= title
-        p Welcome to #{title}
-        form(action="/home/account-creation" method="post")
-            fieldset
-                label(for="user") User :
-                input(type="text" id="user" name="user" placeholder="Enter your username")
-                label(for="password") User :
-                input(type="password" id="password" name="password" placeholder="Enter your password")
-                input(type="submit" value="Submit")
+        p CARTE D'OR
 
         each rest in restaurants
             .restaurant-div
