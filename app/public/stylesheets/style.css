@@ -74,6 +74,12 @@ a {
     height:50px;
 }
 
+#signout-button-link{
+    right:0px;
+    width:75px;
+    height:46px;
+}
+
 .sign-back-button{
     bottom:0px;
     left:0px;

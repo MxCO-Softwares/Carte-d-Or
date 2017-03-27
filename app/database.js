@@ -94,13 +94,18 @@ class Database{
     }
 
     getUserPageInfo(id){
-        var userPageInfo = this.getUserById(id);
+        var userPageInfo = (JSON.parse(JSON.stringify(this.getUserById(id))));
         for(var i=0; i<userPageInfo.myLunches.length; i++){
             console.log(JSON.stringify(userPageInfo));
             userPageInfo.myLunches[i]={id:userPageInfo.myLunches[i], name:this.getLunchById(userPageInfo.myLunches[i]).name};
         }
         for(var i=0; i<userPageInfo.choices.length; i++){
             userPageInfo.choices[i]=this.getRestaurantById(userPageInfo.choices[i]);
+            if(userPageInfo.choices[i]){
+                for(var j=0; j < userPageInfo.choices[i].userChoice.length; j++){
+                    userPageInfo.choices[i].userChoice[j]=this.getUserById(userPageInfo.choices[i].userChoice[j]);
+                }
+            }
         }
         return userPageInfo;
     }
@@ -197,7 +202,8 @@ var restaurants =
             [
                 "https://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-5.jpg"
             ]
-        }
+        },
+        userChoice:[0,3]
     },
     {
         id:1,
@@ -208,7 +214,8 @@ var restaurants =
             [
                 "https://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-6.jpg"
             ]
-        }
+        },
+        userChoice:[2]
     },
     {
         id:2,
@@ -219,7 +226,8 @@ var restaurants =
             [
                 "https://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-7.jpg"
             ]
-        }
+        },
+        userChoice:[0,3]
     },
     {
         id:3,
@@ -230,7 +238,8 @@ var restaurants =
             [
                 "https://wallpapers.wallhaven.cc/wallpapers/thumb/small/th-8.jpg"
             ]
-        }
+        },
+        userChoice:[3]
     }
 ];
 

@@ -3,6 +3,7 @@ extends layout
 block content
 
     header.header
+        a.button-link#signout-button-link(href="/home/signout") Sign Out
 
     .leftpanel-div
 
@@ -11,27 +12,31 @@ block content
                 img.round-img(src=restaurants[2].img[0] height="100" width="100")
 
             a(href="/home")
-                p.center-p Elias B.
+                p.center-p= user.infoUser.name
             - var n = 0;
             while n < 3
                 span.fav-restaurant-span
                     a.fav-restaurant-link(href="/home")
-                        img.round-square-img(src=restaurants[2].img[0] height="50" width="50")
-                        .toast.fav-restaurant-toast= n++
-
+                        if (user.choices[n] != null)
+                            img.round-square-img(src=user.choices[n].infoRestaurant.img[0] height="50" width="50")
+                            .toast.fav-restaurant-toast= user.choices[n].userChoice.length
+                        else
+                            img.round-square-img(src="" height="50" width="50")
+                - n++;
 
 
         .lunchs-list-div
-            - var values = ["Segugu-midi","Segugu-soir","AfterWork"];
             ul
-              each val in values
+              each lunch in user.myLunches
                 li
-                    a(href="/home")=val
+                    a(href="/home")=lunch.name
 
 
     .lunch-div
         h1= title
         p CARTE D'OR
+
+        p #{JSON.stringify(user)}
 
         each rest in restaurants
             .restaurant-div

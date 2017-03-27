@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
     if(req.session.userId == null){
         res.render('unregistered_home');
     } else{
-        res.render('home', { title: 'Home', restaurants:restaurant});
+        res.render('home', { title: 'Home', restaurants:restaurant, user:database.getUserPageInfo(req.session.userId), });
     }
 });
 
@@ -55,6 +55,13 @@ router.post('/signin', function (req, res, next) {
         res.render('unregistered_home', {signinFailed:true});
     }else
         res.redirect('/home');
+});
+
+router.get('/signout', function (req, res, next) {
+    if(req.session.userId != null){
+        req.session.userId = null;
+    }
+    res.redirect('/home');
 });
 
 module.exports = router;
